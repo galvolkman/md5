@@ -1,6 +1,7 @@
 import socket
 from threading import Thread
 import hashlib
+import random
 
 
 class Server:
@@ -10,7 +11,8 @@ class Server:
         self.server_socket.listen()
         self.clients = []
         self.threads = []
-        self.ans = hashlib.md5(str(2456789).encode()).hexdigest()
+        self.secret = random.randint(1000000000, 9999999999)
+        self.ans = hashlib.md5(str(self.secret).encode()).hexdigest()
 
     def handle_server(self):
         for i in range(10):

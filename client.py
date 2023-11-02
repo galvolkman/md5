@@ -3,6 +3,7 @@ import hashlib
 from threading import Thread
 import time
 
+
 class Worker:
     def __init__(self, bottom, top, secret):
         self.found = False
@@ -15,13 +16,14 @@ class Worker:
     def handle_thread(self):
         for i in range(self.bottom, self.top):
             if hashlib.md5(str(i).encode()).hexdigest() == self.secret:
-                print(f"the num is: {i}")
+                print(f"the num is: {i} \n")
                 self.founded_secret = i
                 #.my_socket.send(str(i).encode())
                 self.found = True
                 break
 
         self.done = True
+
 
 class Client:
     def __init__(self):
@@ -42,7 +44,7 @@ class Client:
         for i in range(10):
             bottom1 = int(self.bottom + (i * self.dif))
             top1 = int(self.bottom + ((i + 1) * self.dif))
-            print(f"{bottom1} \n{top1}")
+           # print(f"{bottom1} \n{top1}")
             worker = Worker(bottom1, top1, self.result)
             workers.append(worker)
             t = Thread(target=worker.handle_thread)
@@ -63,8 +65,6 @@ class Client:
             if count == len(threads):
                 self.my_socket.send("no".encode())
                 break
-
-
 
     def handle_thread(self, bottom, top, result):
         for i in range(bottom, top):
